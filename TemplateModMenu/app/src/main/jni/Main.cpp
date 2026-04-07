@@ -538,7 +538,7 @@ void Changes(JNIEnv *env, [[maybe_unused]] jclass clazz, [[maybe_unused]] jobjec
                 {
             isMenuChinese = boolean;
             break;
-            }
+            
         }
     }
 }

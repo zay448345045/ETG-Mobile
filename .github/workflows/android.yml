@@ -28,6 +28,7 @@ jobs:
          chmod +x gradlew
  #       ./gradlew assembleDebug
       - name: Build with Gradle
+        working-directory: ./TemplateModMenu
         run: ./gradlew assembleDebug
 
       # 第一步：生成带时间戳的文件名（避免覆盖）

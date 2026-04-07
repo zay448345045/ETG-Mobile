@@ -50,7 +50,10 @@ bool returnToFoyer = false;
 bool showLoginScreen = false;
 int camScale = 1;
 bool setCamScale = false;
-bool enableEnglish = true;
+bool enableEnglish = false;
+int targetLanguage = 0;
+bool isMenuChinese = false;
+
 int runSeed = -1;
 bool getSeed = false;
 bool setSeed = false;
@@ -153,7 +156,7 @@ void GameManager_Update(Il2CppObject *instance) {
 Il2CppObject* getSettingData(Il2CppObject *instance) {
     if (enableEnglish) {
         LOGD("ENGLISH APPLIED!");
-        instance->invoke_method<void>("ApplyLanguage", 10);
+        instance->invoke_method<void>("ApplyLanguage",targetLanguage);
         enableEnglish = false;
     }
     return instance->invoke_method<Il2CppObject*>("get_SettingData");
@@ -379,14 +382,14 @@ void *hack_thread(void *)
 
 jobjectArray GetFeatureList(JNIEnv *env, [[maybe_unused]] jobject context)
 {
-    jobjectArray ret;
+//    jobjectArray ret;
 
 
 
 
     const char *features[] = {
         OBFUSCATE("Button_Developer Gui"),
-        OBFUSCATE("Button_Enable Crosshair"),
+        OBFUSCATE("Toggle_Enable Crosshair"),
         OBFUSCATE("Button_Enter The Breach"),
         OBFUSCATE("Button_Fix Screen Bugs"),
         OBFUSCATE("Button_Enable Cult of the Lamb Event"),
@@ -395,15 +398,38 @@ jobjectArray GetFeatureList(JNIEnv *env, [[maybe_unused]] jobject context)
         OBFUSCATE("Button_Try Load Autosave"),
         OBFUSCATE("Button_Save Mid Run"),
         OBFUSCATE("Button_Enable All Characters"),
-        OBFUSCATE("Button_Load Character Select")};
+        OBFUSCATE("Button_Load Character Select"),
+    OBFUSCATE("Toggle_Force English Language"),
+        OBFUSCATE("Toggle_Switch Menu (中/EN)Language")
+};
+// 定义中文菜单 (对应序号必须完全一致)
+    const char *zhFeatures[] = {
+        OBFUSCATE("按钮_开发者工具"),
+        OBFUSCATE("开关_开关准星"),
+        OBFUSCATE("按钮_进入地牢"),
+        OBFUSCATE("按钮_修复屏幕Bug"),
+        OBFUSCATE("按钮_开启咩咩启示录联动"),
+        OBFUSCATE("进度条_镜头缩放_1_3"),
+        OBFUSCATE("按钮_开启二号玩家(徒弟)"),
+        OBFUSCATE("按钮_尝试读取存档"),
+        OBFUSCATE("按钮_保存当前进度"),
+        OBFUSCATE("按钮_解锁全角色"),
+        OBFUSCATE("按钮_加载角色选择界面"),
+    OBFUSCATE("开关_切换游戏语言 (中/EN)"),
+        OBFUSCATE("开关_切换菜单语言 (中/EN)")
+    };
 
+    const char **activeFeatures = isMenuChinese ? zhFeatures : enFeatures;
     // Now you dont have to manually update the number everytime;
-    int Total_Feature = (sizeof features / sizeof features[0]);
-    ret = (jobjectArray)env->NewObjectArray(Total_Feature, env->FindClass(OBFUSCATE("java/lang/String")),
+    int Total_Feature = sizeof(enFeatures) / sizeof(enFeatures[0]);
+//    (sizeof features / sizeof features[0]);
+//    ret = ( 
+    
+    jobjectArray ret = (jobjectArray)env->NewObjectArray(Total_Feature, env->FindClass(OBFUSCATE("java/lang/String")),
                                             env->NewStringUTF(""));
 
     for (int i = 0; i < Total_Feature; i++)
-        env->SetObjectArrayElement(ret, i, env->NewStringUTF(features[i]));
+        env->SetObjectArrayElement(ret, i, env->NewStringUTF(activeFeatures[i]));
 
     return (ret);
 }
@@ -423,25 +449,25 @@ void Changes(JNIEnv *env, [[maybe_unused]] jclass clazz, [[maybe_unused]] jobjec
         case 0:
         {
             developerGUI = true;
-            enableEnglish = true;
+//            enableEnglish = true;
             break;
         }
         case 1:
         {
-            showCrosshair = true;
+           showCrosshair = boolean;
             break;
         }
         case 2:
         {
             enterMainScene = true;
-            enableEnglish = true;
+//            enableEnglish = true;
             break;
         }
         case 3:
         {
             forceUnpause = true;
             enterMainScene = true;
-            enableEnglish = true;
+//            enableEnglish = true;
 
             break;
         }
@@ -459,7 +485,7 @@ void Changes(JNIEnv *env, [[maybe_unused]] jclass clazz, [[maybe_unused]] jobjec
         case 6: 
         {
             enableCultist = true;
-            enableEnglish = true;
+//            enableEnglish = true;
 
            
             break;
@@ -468,28 +494,46 @@ void Changes(JNIEnv *env, [[maybe_unused]] jclass clazz, [[maybe_unused]] jobjec
         case 7:
         {
             loadSave = true;
-            enableEnglish = true;
+//            enableEnglish = true;
 
             break;
         }
         case 8: 
         {
             saveGame = true;
-            enableEnglish = true;
+//            enableEnglish = true;
             break;
         }
         case 9:
         {
             enableAll = true;
-            enableEnglish = true;
+//            enableEnglish = true;
 
             break;
         }
         case 10:
         {
             charSelect = true;
-            enableEnglish = true;
+//            enableEnglish = true;
+            break; 
+        }
+        case 11: // 处理新增的开关
+        {
+            enableEnglish = true; // 触发切换动作
+            if (boolean) {
+                targetLanguage = 10; // 开关打开 -> 英文
+                LOGD("Switching to English");
+            } else {
+                targetLanguage = 0;  // 开关关闭 -> 中文
+                LOGD("Switching to Chinese");
+            }
             break;
+        }
+            case 12
+                {
+            isMenuChinese = boolean;
+            break;
+            }
         }
     }
 }

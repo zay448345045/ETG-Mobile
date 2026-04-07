@@ -23,6 +23,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
       - name: ON with Gradle
       # 给 gradlew 增加可执行权限，然后再运行
+        working-directory: ./TemplateModMenu/gradle/wrapper  # 指向 gradlew 所在的实际坐标
         run: |
          chmod +x gradlew
  #       ./gradlew assembleDebug

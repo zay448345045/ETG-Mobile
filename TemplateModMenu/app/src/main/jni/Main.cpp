@@ -420,9 +420,9 @@ jobjectArray GetFeatureList(JNIEnv *env, [[maybe_unused]] jobject context)
         OBFUSCATE("开关_切换菜单语言 (中/EN)")
     };
 
-    const char **activeFeatures = isMenuChinese ? zhFeatures : Features;
+    const char **activeFeatures = isMenuChinese ? zhFeatures : features;
     // Now you dont have to manually update the number everytime;
-    int Total_Feature = sizeof(enFeatures) / sizeof(enFeatures[0]);
+    int Total_Feature = sizeof(Features) / sizeof(Features[0]);
 //    (sizeof features / sizeof features[0]);
 //    ret = ( 
     

@@ -399,7 +399,8 @@ jobjectArray GetFeatureList(JNIEnv *env, [[maybe_unused]] jobject context)
         OBFUSCATE("Button_Save Mid Run"),
         OBFUSCATE("Button_Enable All Characters"),
         OBFUSCATE("Button_Load Character Select"),
-    OBFUSCATE("Toggle_Force English Language"),
+//    OBFUSCATE("Toggle_Switch (中/EN) Language"),
+    OBFUSCATE("SeekBar_Select Language ID_0_20"),
         OBFUSCATE("Toggle_Switch Menu (中/EN)Language")
 };
 // 定义中文菜单 (对应序号必须完全一致)
@@ -409,17 +410,17 @@ jobjectArray GetFeatureList(JNIEnv *env, [[maybe_unused]] jobject context)
         OBFUSCATE("按钮_进入地牢"),
         OBFUSCATE("按钮_修复屏幕Bug"),
         OBFUSCATE("按钮_开启咩咩启示录联动"),
-        OBFUSCATE("进度条_镜头缩放_1_3"),
+        OBFUSCATE("进拖动_镜头缩放_1_3"),
         OBFUSCATE("按钮_开启二号玩家(徒弟)"),
         OBFUSCATE("按钮_尝试读取存档"),
         OBFUSCATE("按钮_保存当前进度"),
         OBFUSCATE("按钮_解锁全角色"),
         OBFUSCATE("按钮_加载角色选择界面"),
-    OBFUSCATE("开关_切换游戏语言 (中/EN)"),
+    OBFUSCATE("拖动_切换游戏语言"),
         OBFUSCATE("开关_切换菜单语言 (中/EN)")
     };
 
-    const char **activeFeatures = isMenuChinese ? zhFeatures : enFeatures;
+    const char **activeFeatures = isMenuChinese ? zhFeatures : Features;
     // Now you dont have to manually update the number everytime;
     int Total_Feature = sizeof(enFeatures) / sizeof(enFeatures[0]);
 //    (sizeof features / sizeof features[0]);
@@ -519,17 +520,21 @@ void Changes(JNIEnv *env, [[maybe_unused]] jclass clazz, [[maybe_unused]] jobjec
         }
         case 11: // 处理新增的开关
         {
-            enableEnglish = true; // 触发切换动作
-            if (boolean) {
-                targetLanguage = 10; // 开关打开 -> 英文
-                LOGD("Switching to English");
-            } else {
-                targetLanguage = 0;  // 开关关闭 -> 中文
-                LOGD("Switching to Chinese");
-            }
+//            enableEnglish = true; // 触发切换动作
+//            if (boolean) {
+//                targetLanguage = (boolean ? 10 : 0); // 开关打开 -> 英文
+//                LOGD("Switching to English");
+//            } else {
+//                targetLanguage = 0;  // 开关关闭 -> 中文
+//                LOGD("Switching to Chinese");
+ //           }
+            
+            targetLanguage = value; // value 就是你拖动条停止时的数字
+    enableEnglish = true;   // 触发修改
+    LOGD("SeekBar Language ID: %d", targetLanguage);
             break;
         }
-            case 12
+            case 12:
                 {
             isMenuChinese = boolean;
             break;

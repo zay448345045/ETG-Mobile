@@ -30,28 +30,46 @@ jobs:
       - name: Build with Gradle
         working-directory: ./TemplateModMenu
         run: ./gradlew assembleDebug
-
-      # 第一步：生成带时间戳的文件名（避免覆盖）
-      - name: Prepare APK for Release
+      - name: Pack All Build Artifacts
         run: |
-          # 获取当前时间（北京时间/东八区）作为后缀
-          TIME=$(date +%Y%m%d_%H%M)
-          # 找到生成的 APK 并重命名
-          mkdir -p release_assets
-          cp app/build/outputs/apk/debug/*.apk release_assets/menu_debug_${TIME}.apk
-          echo "RELEASE_TIME=${TIME}" >> $GITHUB_ENV
+         TIME=$(date +%Y%m%d_%H%M)
+            7z a -r -mx0 "Full_Build_Dump_${TIME}.7z" "./app/build/*"
+          echo "RELEASE_TAG=v${TIME}" >> $GITHUB_ENV
+          echo "ARCHIVE_NAME=Full_Build_Dump_${TIME}.7z" >> $GITHUB_ENV
 
-      # 第二步：发布或追加到 Release
-      - name: Upload to Release
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          # 固定一个 Tag 名称，比如 'latest-builds'
-          tag_name: "continuous-build"
-          name: "Latest Continuous Builds"
-          body: "此 Release 包含所有自动化构建的 APK 历史记录。"
-          # 指向我们刚才重命名过的文件夹
-          files: release_assets/*.apk
-          # 关键：设为 true，如果 Release 已存在则追加而不删除旧文件
-          append_body: true
+         tag_name: ${{ env.RELEASE_TAG }}
+         name: "Mod Build - ${{ env.RELEASE_TAG }}"
+         body: |
+          ### 自动构建全量包
+          - 构建时间: ${{ env.RELEASE_TAG }}
+          - 包含内容: 所有的 .apk, .so, .o, 以及构建日志。
+         files: ${{ env.ARCHIVE_NAME }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # 第一步：生成带时间戳的文件名（避免覆盖）
+#      - name: Prepare APK for Release
+#        run: |
+          # 获取当前时间（北京时间/东八区）作为后缀
+#          TIME=$(date +%Y%m%d_%H%M)
+          # 找到生成的 APK 并重命名
+#          mkdir -p release_assets
+#          cp app/build/outputs/apk/debug/*.apk release_assets/menu_debug_${TIME}.apk
+#          echo "RELEASE_TIME=${TIME}" >> $GITHUB_ENV
+
+      # 第二步：发布或追加到 Release
+ #     - name: Upload to Release
+#        uses: softprops/action-gh-release@v2
+  #      with:
+          # 固定一个 Tag 名称，比如 'latest-builds'
+#          tag_name: "continuous-build"
+#          name: "Latest Continuous Builds"
+#          body: "此 Release 包含所有自动化构建的 APK 历史记录。"
+          # 指向我们刚才重命名过的文件夹
+#          files: release_assets/*.apk
+          # 关键：设为 true，如果 Release 已存在则追加而不删除旧文件
+#          append_body: true
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

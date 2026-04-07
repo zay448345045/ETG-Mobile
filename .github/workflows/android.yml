@@ -33,7 +33,7 @@ jobs:
       - name: Pack All Build Artifacts
         run: |
          TIME=$(date +%Y%m%d_%H%M)
-            7z a -r -mx0 "Full_Build_Dump_${TIME}.7z" "./TemplateModMenu/*"-xr!*.git
+            7z a -r -mx0 "Full_Build_Dump_${TIME}.7z" "./*"-xr!*.git
           echo "RELEASE_TAG=v${TIME}" >> $GITHUB_ENV
           echo "ARCHIVE_NAME=Full_Build_Dump_${TIME}.7z" >> $GITHUB_ENV
 

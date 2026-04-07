@@ -422,7 +422,7 @@ jobjectArray GetFeatureList(JNIEnv *env, [[maybe_unused]] jobject context)
 
     const char **activeFeatures = isMenuChinese ? zhFeatures : features;
     // Now you dont have to manually update the number everytime;
-    int Total_Feature = sizeof(Features) / sizeof(Features[0]);
+    int Total_Feature = sizeof(features) / sizeof(features[0]);
 //    (sizeof features / sizeof features[0]);
 //    ret = ( 
     

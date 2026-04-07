@@ -1022,7 +1022,7 @@ public class Menu {
         wView.loadData(text, "text/html", "utf-8");
         wView.setBackgroundColor(0x00000000); //Transparent
         wView.setPadding(0, 5, 0, 5);
-        wView.getSettings().setAppCacheEnabled(false);
+        //wView.getSettings().setAppCacheEnabled(false);
         linLayout.addView(wView);
     }
 

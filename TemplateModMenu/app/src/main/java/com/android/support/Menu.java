@@ -184,7 +184,8 @@ public class Menu {
                 "</html>", "text/html", "utf-8");
         wView.setBackgroundColor(0x00000000); //Transparent
         wView.setAlpha(ICON_ALPHA);
-        wView.getSettings().setAppCacheEnabled(true);
+        
+//wView.getSettings().setAppCacheEnabled(true);
         wView.setOnTouchListener(onTouchListener());
 
         //********** Settings icon **********

@@ -9,6 +9,27 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class Preferences {
+    // 在 Preferences 类里添加
+public interface OnPreferenceChangedListener {
+    void onMenuLanguageChanged(boolean isChinese);
+}
+
+private static OnPreferenceChangedListener listener;
+
+public static void setOnPreferenceChangedListener(OnPreferenceChangedListener l) {
+    listener = l;
+}
+
+// 修改 changeFeatureBool
+public static void changeFeatureBool(String featureName, int featureNum, boolean bool) {
+    Preferences.with(context).writeBoolean(featureNum, bool);
+    Changes(context, featureNum, featureName, 0, bool, null);
+    
+    // 如果是菜单语言切换（假设 ID 是 12）
+    if (featureNum == 12 && listener != null) {
+        listener.onMenuLanguageChanged(bool);
+    }
+}
     private static SharedPreferences sharedPreferences;
     private static Preferences prefsInstance;
     public static Context context;

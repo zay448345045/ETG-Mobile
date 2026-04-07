@@ -19,7 +19,7 @@ private static OnPreferenceChangedListener listener;
 public static void setOnPreferenceChangedListener(OnPreferenceChangedListener l) {
     listener = l;
 }
-
+/*
 // 修改 changeFeatureBool
 public static void changeFeatureBool(String featureName, int featureNum, boolean bool) {
     Preferences.with(context).writeBoolean(featureNum, bool);
@@ -30,7 +30,7 @@ public static void changeFeatureBool(String featureName, int featureNum, boolean
         listener.onMenuLanguageChanged(bool);
     }
 }
-    
+    */
     private static SharedPreferences sharedPreferences;
     private static Preferences prefsInstance;
     public static Context context;

@@ -12,7 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
-
+        with: 
+           submodules: recursive # 确保 Dobby 和 json 被拉取
       - name: Set up JDK 
         uses: actions/setup-java@v5
         with:
@@ -21,4 +22,29 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew assembleDebug
+
+      # 第一步：生成带时间戳的文件名（避免覆盖）
+      - name: Prepare APK for Release
+        run: |
+          # 获取当前时间（北京时间/东八区）作为后缀
+          TIME=$(date +%Y%m%d_%H%M)
+          # 找到生成的 APK 并重命名
+          mkdir -p release_assets
+          cp app/build/outputs/apk/debug/*.apk release_assets/menu_debug_${TIME}.apk
+          echo "RELEASE_TIME=${TIME}" >> $GITHUB_ENV
+
+      # 第二步：发布或追加到 Release
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          # 固定一个 Tag 名称，比如 'latest-builds'
+          tag_name: "continuous-build"
+          name: "Latest Continuous Builds"
+          body: "此 Release 包含所有自动化构建的 APK 历史记录。"
+          # 指向我们刚才重命名过的文件夹
+          files: release_assets/*.apk
+          # 关键：设为 true，如果 Release 已存在则追加而不删除旧文件
+          append_body: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

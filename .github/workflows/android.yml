@@ -1,0 +1,20 @@
+name: Build Android So
+
+on:
+#  push:
+#    branches: [ "main" ] # 当你推送到主分支时触发
+  workflow_dispatch:      # 允许手动点击按钮触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up JDK 
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'

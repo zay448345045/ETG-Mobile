@@ -30,6 +30,7 @@ public static void changeFeatureBool(String featureName, int featureNum, boolean
         listener.onMenuLanguageChanged(bool);
     }
 }
+    
     private static SharedPreferences sharedPreferences;
     private static Preferences prefsInstance;
     public static Context context;

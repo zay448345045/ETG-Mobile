@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 android {
     namespace "com.android.support"
-    compileSdkVersion 30
+    compileSdkVersion 34
     defaultConfig {
         applicationId "com.android.support"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 36
         versionCode 1
         versionName "3.2"
         ndk {
@@ -13,7 +13,7 @@ android {
         }
         signingConfig signingConfigs.debug
     }
-    ndkVersion "25.2.9519653"
+  //  ndkVersion "25.2.9519653"
     buildTypes {
         release {
             shrinkResources false
@@ -32,7 +32,7 @@ android {
 //        }
         cmake {
             path "src/main/jni/CMakeLists.txt"
-            version "3.22.1"
+            version "4.3.1"
         }
 
     }

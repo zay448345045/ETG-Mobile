@@ -388,19 +388,19 @@ jobjectArray GetFeatureList(JNIEnv *env, [[maybe_unused]] jobject context)
 
 
     const char *features[] = {
-        OBFUSCATE("Button_Developer Gui"),
-        OBFUSCATE("Toggle_Enable Crosshair"),
-        OBFUSCATE("Button_Enter The Breach"),
-        OBFUSCATE("Button_Fix Screen Bugs"),
-        OBFUSCATE("Button_Enable Cult of the Lamb Event"),
-        OBFUSCATE("SeekBar_Camera Scale_1_3"),
-        OBFUSCATE("Button_Enable Cultist"),
-        OBFUSCATE("Button_Try Load Autosave"),
-        OBFUSCATE("Button_Save Mid Run"),
-        OBFUSCATE("Button_Enable All Characters"),
-        OBFUSCATE("Button_Load Character Select"),
+        OBFUSCATE("Button_Developer Gui|开发者工具"),
+        OBFUSCATE("Toggle_Enable Crosshair|开关准星"),
+        OBFUSCATE("Button_Enter The Breach|进入地牢"),
+        OBFUSCATE("Button_Fix Screen Bugs|修复屏幕适配"),
+        OBFUSCATE("Button_Enable Cult of the Lamb Event|开启咩咩启示录联动"),
+        OBFUSCATE("SeekBar_Camera Scale|镜头缩放_1_3"),
+        OBFUSCATE("Button_Enable Cultist|开启二号玩家(徒弟)"),
+        OBFUSCATE("Button_Try Load Autosave|尝试开启自动读取存档"),
+        OBFUSCATE("Button_Save Mid Run|保存当前进度"),
+        OBFUSCATE("Button_Enable All Characters|解锁全角色"),
+        OBFUSCATE("Button_Load Character Select|加载角色选择界面"),
 //    OBFUSCATE("Toggle_Switch (中/EN) Language"),
-    OBFUSCATE("SeekBar_Select Language ID_0_20"),
+    OBFUSCATE("SeekBar_Select Language ID|切换游戏语言_5_6"),
         OBFUSCATE("Toggle_Switch Menu (中/EN)Language")
 };
 // 定义中文菜单 (对应序号必须完全一致)

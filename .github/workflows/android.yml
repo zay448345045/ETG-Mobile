@@ -28,7 +28,7 @@ jobs:
          chmod +x gradlew
  #       ./gradlew assembleDebug
       - name: Build with Gradle
-        working-directory: ./TemplateModMenu
+        working-directory: ./TemplateModMenu/app/build/outputs/apk/debug/*
         run: ./gradlew assembleDebug
       - name: Pack All Build Artifacts
 #-xr!*.git

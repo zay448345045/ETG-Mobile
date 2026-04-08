@@ -1,6 +1,6 @@
 # ETG-Mobile
 Enter The Gungeon Mobile Port With Mods
-
+[![Total Downloads](https://img.shields.io/github/downloads/zay448345045/ETG-Mobile/total?style=for-the-badge&color=2ea44f&logo=github)](https://github.com/zay448345045/ETG-Mobile/releases)
 Updated 1.0.400 Oct 2 2025
 
 Saves are stored at Android/data/com.xd.etg.taptap/files/SlotA_****.save -- You can replace with your PC saves

@@ -40,7 +40,7 @@ jobs:
           echo "ARCHIVE_NAME=Full_Build_Dump_${TIME}.7z" >> $GITHUB_ENV
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
          tag_name: ${{ env.RELEASE_TAG }}
          name: "Mod Build - ${{ env.RELEASE_TAG }}"
@@ -63,7 +63,7 @@ jobs:
 
       # 第二步：发布或追加到 Release
  #     - name: Upload to Release
-#        uses: softprops/action-gh-release@v2
+#        uses: softprops/action-gh-release@v3
   #      with:
           # 固定一个 Tag 名称，比如 'latest-builds'
 #          tag_name: "continuous-build"
